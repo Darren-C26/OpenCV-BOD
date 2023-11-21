@@ -34,16 +34,16 @@ def detect_obstacles(video_path, output_path='output_video.mp4'):
         lower_lightgreen = np.array([40, 50, 50])
         upper_lightgreen = np.array([80, 255, 255])
 
-        lower_white = np.array([0, 0, 200])
-        upper_white = np.array([180, 25, 255])
+        lower_blue = np.array([0, 0, 200])
+        upper_blue = np.array([180, 25, 255])
 
         # Create masks using color ranges
         mask_lightred = cv2.inRange(hsv, lower_lightred, upper_lightred)
         mask_lightgreen = cv2.inRange(hsv, lower_lightgreen, upper_lightgreen)
-        mask_white = cv2.inRange(hsv, lower_white, upper_white)
+        mask_blue = cv2.inRange(hsv, lower_blue, upper_blue)
 
         # Combine masks
-        mask = cv2.bitwise_or(mask_lightred, cv2.bitwise_or(mask_lightgreen, mask_white))
+        mask = cv2.bitwise_or(mask_lightred, cv2.bitwise_or(mask_lightgreen, mask_blue))
 
         # Find contours in the combined mask
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -90,7 +90,7 @@ def detect_obstacles(video_path, output_path='output_video.mp4'):
             cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
         # Display the result
-        #cv2.imshow('Obstacle Detection', frame)
+        cv2.imshow('Obstacle Detection', frame)
 
         if cv2.waitKey(25) & 0xFF == ord('q'):
             break
