@@ -13,10 +13,9 @@ def generate_video(video_path, width=640, height=480, fps=30, seconds=10, max_sh
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     video_writer = cv2.VideoWriter(video_path, fourcc, fps, (width, height))
 
-    prev_color = None
-
     # Set a fixed seed for reproducibility
-    np.random.seed(35)
+    seed_num = int(input("Enter Seed [int]: "))
+    np.random.seed(seed_num)
     available_colors = ['red', 'green', 'blue']
 
     for _ in range(seconds):
@@ -39,13 +38,13 @@ def generate_video(video_path, width=640, height=480, fps=30, seconds=10, max_sh
             else:
                 rgb_color = (255, 0, 0)  # Blue
 
-            # Randomly choose a shape to draw: 0 for circle, 1 for rectangle, 2 for triangle
+            # Randomly choose a shape to draw: 0 for circle, 1 for triangle
             shape_choice = np.random.randint(0, 2)
 
             if shape_choice == 0:
                 # Draw a circle
                 #radius = max_shape_size
-                cv2.circle(frame, (x, y), 20, rgb_color, -1)
+                cv2.circle(frame, (x, y), np.random.randint(10, max_shape_size), rgb_color, -1)
             else:
                 # Draw a triangle
                 vertices = np.array([[x, y - np.random.randint(5, max_shape_size)],
